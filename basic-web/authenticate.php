@@ -1,6 +1,9 @@
 <?php
-setcookie('username', $_POST['username']);
-$submitted = !empty($_POST); ?>
+$submitted = !empty($_POST['username']) && !empty($_POST['password']);
+if ($submitted) {
+    setcookie('username', $_POST['username']);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,11 +11,14 @@ $submitted = !empty($_POST); ?>
     <title>Bookstore</title>
 </head>
 <body>
-    <p>Form submitted? <?php echo (int) $submitted; ?></p>
+<?php if ($submitted): ?>
     <p>Your login info is</p>
     <ul>
         <li><b>username</b>: <?php echo $_POST['username']; ?></li>
         <li><b>password</b>: <?php echo $_POST['password']; ?></li>
     </ul>
+<?php else: ?>
+    <p>You did not submit anything.</p>
+<?php endif; ?>
 </body>
 </html>
