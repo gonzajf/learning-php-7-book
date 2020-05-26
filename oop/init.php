@@ -3,13 +3,15 @@
 use Bookstore\Domain\Book;
 use Bookstore\Domain\Customer;
 
-function __autoload($classname) {
+function autoload($classname) {
     $lastSlash = strpos($classname, '\\') + 1;
     $classname = substr($classname, $lastSlash);
     $directory = str_replace('\\', '/', $classname);
     $filename = __DIR__ . '/src/' . $directory . '.php';
     require_once($filename);
 }
+
+spl_autoload_register('autoload');
 
 $book1 = new Book(9785267006323,"1984", "George Orwell",  12);
 $book2 = new Book(9780061120084, "To Kill a Mockingbird", "Harper Lee" , 2);
