@@ -1,4 +1,8 @@
 <?php
+
+use Bookstore\Domain\Book;
+use Bookstore\Domain\Customer;
+
 require_once __DIR__ . '/Book.php';
 require_once __DIR__ . '/Customer.php';
 

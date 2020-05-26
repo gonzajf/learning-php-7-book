@@ -1,4 +1,7 @@
 <?php
+
+namespace Bookstore\Domain;
+
 class Book {
     public $isbn;
     public $title;
