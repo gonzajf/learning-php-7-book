@@ -1,4 +1,5 @@
 <?php
+include 'functions.php';
 $looking = isset($_GET['title']) || isset($_GET['author']);
 ?>
 <!DOCTYPE html>
@@ -45,15 +46,8 @@ $books = [
 </ul>
 <?php endforeach; ?>
 
-    <p>
-<?php
-    if (isset($_COOKIE['username'])) {
-        echo "You are " . $_COOKIE['username'];
-    } else {
-        echo "You are not authenticated.";
-    }
-?>
-    </p>
+    <p><?php echo loginMessage(); ?></p>
+
 <?php
 if (isset($_GET['title']) && isset($_GET['author'])) {
 ?>
