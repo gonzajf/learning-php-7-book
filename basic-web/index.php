@@ -1,5 +1,5 @@
 <?php
-include 'functions.php';
+require_once 'functions.php';
 $looking = isset($_GET['title']) || isset($_GET['author']);
 ?>
 <!DOCTYPE html>
@@ -37,12 +37,7 @@ $books = [
 ?>
 <?php foreach ($books as $book): ?>
 <ul>
-    <li>
-        <i><?php echo $book['title']; ?></i> - <?php echo $book['author']; ?>
-        <?php if (!$book['available']): ?>
-            <b>Not available</b>
-        <?php endif; ?>
-    </li>
+    <li><?php echo printableTitle($book); ?> </li>
 </ul>
 <?php endforeach; ?>
 
