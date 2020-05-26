@@ -1,6 +1,8 @@
 <?php
 class Customer {
 
+    private static $lastId = 0;
+
     private $id;
     private $firstname;
     private $surname;
@@ -8,10 +10,21 @@ class Customer {
 
     public function __construct(int $id, string $firstname, string $surname, string $email) {
 
-        $this->id = $id;
+        if ($id == null) {
+            $this->id = ++self::$lastId;
+        } else {
+            $this->id = $id;
+            if ($id > self::$lastId) {
+                self::$lastId = $id;
+            }
+        }
         $this->firstname = $firstname;
         $this->surname = $surname;
         $this->email = $email;
+    }
+
+    public static function getLastId(): int {
+        return self::$lastId;
     }
 
     /**
