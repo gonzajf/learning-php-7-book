@@ -10,32 +10,30 @@ $looking = isset($_GET['title']) || isset($_GET['author']);
 </head>
 
 <body>
+<p><?php echo loginMessage(); ?></p>
 <?php
 $booksJson = file_get_contents('books.json');
 $books = json_decode($booksJson, true);
-?>
-<?php foreach ($books as $book): ?>
-<ul>
-    <li><?php echo printableTitle($book); ?> </li>
-</ul>
-<?php endforeach; ?>
-
-    <p><?php echo loginMessage(); ?></p>
-
-<?php
-if (isset($_GET['title']) && isset($_GET['author'])) {
-?>
-    <p>The book you are looking for is</p>
-        <ul>
-            <li><b>Title</b>: <?php echo $_GET['title']; ?></li>
-            <li><b>Author</b>: <?php echo $_GET['author']; ?></li>
-        </ul>
-<?php
+if (isset($_GET['title'])) {
+    echo '<p>Looking for <b>' . $_GET['title'] . '</b></p>';
+    if (bookingBook($books, $_GET['title'])) {
+        echo 'Booked!';
+        updateBooks($books);
     } else {
-?>
-    <p>You are not looking for a book?</p>
-<?php
+        echo 'The book is not available...';
     }
+} else {
+    echo '<p>You are not looking for a book?</p>';
+}
 ?>
+    <ul>
+        <?php foreach ($books as $book): ?>
+            <li>
+                <a href="?title=<?php echo $book['title']; ?>">
+                    <?php echo printableTitle($book); ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
 </body>
 </html>
