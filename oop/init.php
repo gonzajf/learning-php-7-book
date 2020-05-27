@@ -27,9 +27,29 @@ function checkIfValid(Customer $customer, array $books): bool {
     return $customer->getAmountToBorrow() >= count($books);
 }
 
-$basic = new Basic(1, "name", "surname", "email");
-$premium = new Premium(null, "name", "surname", "email");
-var_dump(Person::getLastId()); // 2
-var_dump(Unique::getLastId()); // 0
-var_dump(Basic::getLastId()); // 2
-var_dump(Premium::getLastId()); // 2
+//$basic = new Basic(1, "name", "surname", "email");
+//$premium = new Premium(null, "name", "surname", "email");
+//var_dump(Person::getLastId()); // 2
+//var_dump(Unique::getLastId()); // 0
+//var_dump(Basic::getLastId()); // 2
+//var_dump(Premium::getLastId()); // 2
+try {
+    $basic = new Basic(-1, "name", "surname", "email");
+} catch (\Exception $e) {
+    echo 'Something happened when creating the basic customer: ' . $e->getMessage();
+}
+
+function createBasicCustomer($id)
+{
+    try {
+        echo "\nTrying to create a new customer.\n";
+        return new Basic($id, "name", "surname", "email");
+    } catch (Exception $e) {
+        echo "Something happened when creating the basic customer: "
+            . $e->getMessage() . "\n";
+    } finally {
+        echo "End of function.\n";
+    }
+}
+createBasicCustomer(1);
+createBasicCustomer(-1);

@@ -2,12 +2,19 @@
 
 namespace Bookstore\Utils;
 
+use Bookstore\Exceptions\InvalidIdException;
+
 trait Unique {
 
     private static $lastId = 0;
     protected $id;
 
     public function setId(int $id = null){
+
+        if($id < 0) {
+            throw new InvalidIdException("Id cannot be null");
+        }
+
         if (empty($id)) {
             $this->id = ++self::$lastId;
         } else {
