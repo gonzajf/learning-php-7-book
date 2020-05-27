@@ -5,7 +5,7 @@ namespace Bookstore\Domain\Customer;
 
 use Bookstore\Domain\Customer;
 
-class Premium extends Customer{
+class Premium implements Customer{
 
     public function getMonthlyFee() : float {
         return 10.0;
@@ -17,5 +17,12 @@ class Premium extends Customer{
 
     public function getType() : string {
         return 'Premium';
+    }
+
+    public function pay(float $amount) {
+        echo "Paying $amount.";
+    }
+    public function isExtentOfTaxes(): bool {
+        return true;
     }
 }

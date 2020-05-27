@@ -2,56 +2,9 @@
 
 namespace Bookstore\Domain;
 
-abstract class Customer extends  Person {
+interface Customer extends Payer {
 
-    private static $lastId = 0;
-
-    private $id;
-    private $email;
-
-    abstract public function getMonthlyFee();
-    abstract public function getAmountToBorrow();
-    abstract public function getType();
-
-    public function __construct(int $id, string $firstname, string $surname, string $email) {
-
-        parent::__construct($firstname, $surname);
-        if ($id == null) {
-            $this->id = ++self::$lastId;
-        } else {
-            $this->id = $id;
-            if ($id > self::$lastId) {
-                self::$lastId = $id;
-            }
-        }
-        $this->email = $email;
-    }
-
-    public static function getLastId(): int {
-        return self::$lastId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     */
-    public function setEmail(string $email)
-    {
-        $this->email = $email;
-    }
+    public function getMonthlyFee(): float;
+    public function getAmountToBorrow(): int;
+    public function getType(): string;
 }

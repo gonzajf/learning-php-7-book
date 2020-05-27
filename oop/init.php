@@ -28,4 +28,4 @@ function checkIfValid(Customer $customer, array $books): bool {
 $customer1 = new Basic(5, 'John', 'Doe', 'johndoe@mail.com');
 var_dump(checkIfValid($customer1, [$book1])); // ok
 $customer2 = new Premium(7, 'James', 'Bond', 'james@bond.com');
-var_dump(checkIfValid($customer2, [$book1])); 
+var_dump(checkIfValid($customer2, [$book1]));
