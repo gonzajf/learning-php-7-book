@@ -4,6 +4,8 @@ use Bookstore\Domain\Book;
 use Bookstore\Domain\Customer;
 use Bookstore\Domain\Customer\Basic;
 use Bookstore\Domain\Customer\Premium;
+use Bookstore\Domain\Person;
+use Bookstore\Utils\Unique;
 
 function autoload($classname) {
     $lastSlash = strpos($classname, '\\') + 1;
@@ -25,7 +27,9 @@ function checkIfValid(Customer $customer, array $books): bool {
     return $customer->getAmountToBorrow() >= count($books);
 }
 
-$customer1 = new Basic(5, 'John', 'Doe', 'johndoe@mail.com');
-var_dump(checkIfValid($customer1, [$book1])); // ok
-$customer2 = new Premium(7, 'James', 'Bond', 'james@bond.com');
-var_dump(checkIfValid($customer2, [$book1]));
+$basic = new Basic(1, "name", "surname", "email");
+$premium = new Premium(null, "name", "surname", "email");
+var_dump(Person::getLastId()); // 2
+var_dump(Unique::getLastId()); // 0
+var_dump(Basic::getLastId()); // 2
+var_dump(Premium::getLastId()); // 2

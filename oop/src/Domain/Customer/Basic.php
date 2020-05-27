@@ -2,8 +2,9 @@
 
 namespace Bookstore\Domain\Customer;
 use Bookstore\Domain\Customer;
+use Bookstore\Domain\Person;
 
-class Basic implements Customer {
+class Basic extends Person implements Customer {
 
     public function getMonthlyFee() : float {
         return 5.0;
