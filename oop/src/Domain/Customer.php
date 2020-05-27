@@ -2,12 +2,16 @@
 
 namespace Bookstore\Domain;
 
-class Customer extends  Person {
+abstract class Customer extends  Person {
 
     private static $lastId = 0;
 
     private $id;
     private $email;
+
+    abstract public function getMonthlyFee();
+    abstract public function getAmountToBorrow();
+    abstract public function getType();
 
     public function __construct(int $id, string $firstname, string $surname, string $email) {
 
