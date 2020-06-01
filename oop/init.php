@@ -2,6 +2,7 @@
 
 use Bookstore\Domain\Book;
 use Bookstore\Domain\Customer;
+use Bookstore\Domain\Customer\CustomerFactory;
 use Bookstore\Domain\Customer\Basic;
 use Bookstore\Domain\Customer\Premium;
 use Bookstore\Domain\Person;
@@ -33,23 +34,29 @@ function checkIfValid(Customer $customer, array $books): bool {
 //var_dump(Unique::getLastId()); // 0
 //var_dump(Basic::getLastId()); // 2
 //var_dump(Premium::getLastId()); // 2
-try {
-    $basic = new Basic(-1, "name", "surname", "email");
-} catch (\Exception $e) {
-    echo 'Something happened when creating the basic customer: ' . $e->getMessage();
-}
+//try {
+//    $basic = new Basic(-1, "name", "surname", "email");
+//} catch (\Exception $e) {
+//    echo 'Something happened when creating the basic customer: ' . $e->getMessage();
+//}
+//
+//function createBasicCustomer($id)
+//{
+//    try {
+//        echo "\nTrying to create a new customer.\n";
+//        return new Basic($id, "name", "surname", "email");
+//    } catch (Exception $e) {
+//        echo "Something happened when creating the basic customer: "
+//            . $e->getMessage() . "\n";
+//    } finally {
+//        echo "End of function.\n";
+//    }
+//}
+//createBasicCustomer(1);
+//createBasicCustomer(-1);
 
-function createBasicCustomer($id)
-{
-    try {
-        echo "\nTrying to create a new customer.\n";
-        return new Basic($id, "name", "surname", "email");
-    } catch (Exception $e) {
-        echo "Something happened when creating the basic customer: "
-            . $e->getMessage() . "\n";
-    } finally {
-        echo "End of function.\n";
-    }
-}
-createBasicCustomer(1);
-createBasicCustomer(-1);
+$basic = CustomerFactory::factory('basic', 2, 'mary', 'poppins', 'mary@poppins.com');
+$premium = CustomerFactory::factory('premium', null, 'james', 'bond', 'james@bond.com');
+
+var_dump($basic);
+var_dump($premium);
