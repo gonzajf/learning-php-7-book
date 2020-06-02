@@ -65,3 +65,17 @@ var_dump($premium);
 $config = Config::getInstance();
 $dbConfig = $config->get('db');
 var_dump($dbConfig);
+
+$addTaxes = function (array &$book, $index, $percentage) {
+    $book['price'] += round($percentage * $book['price'], 2);
+};
+
+$books = [
+    ['title' => '1984', 'price' => 8.15],
+    ['title' => 'Don Quijote', 'price' => 12.00],
+    ['title' => 'Odyssey', 'price' => 3.55]
+];
+
+array_walk($books, $addTaxes, 0.16);
+
+var_dump($books);
