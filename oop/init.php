@@ -6,6 +6,7 @@ use Bookstore\Domain\Customer\CustomerFactory;
 use Bookstore\Domain\Customer\Basic;
 use Bookstore\Domain\Customer\Premium;
 use Bookstore\Domain\Person;
+use Bookstore\Utils\Config;
 use Bookstore\Utils\Unique;
 
 function autoload($classname) {
@@ -60,3 +61,7 @@ $premium = CustomerFactory::factory('premium', null, 'james', 'bond', 'james@bon
 
 var_dump($basic);
 var_dump($premium);
+
+$config = Config::getInstance();
+$dbConfig = $config->get('db');
+var_dump($dbConfig);
