@@ -76,7 +76,7 @@ array_walk($books, $addTaxes, 0.16);
 
 var_dump($books);
 
-$dbConfig = Config::getInstance()->get('db');
+/*$dbConfig = Config::getInstance()->get('db');
 $db = new PDO(
     'mysql:host=127.0.0.1;dbname=bookstore',
     $dbConfig['user'],
@@ -87,8 +87,8 @@ $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 $rows = $db->query('SELECT * FROM book ORDER BY title');
 foreach ($rows as $row) {
     var_dump($row);
-}
-
+}*/
+/*
 $query = <<<SQL
 INSERT INTO book (isbn, title, author, price)
 VALUES ("9788187981954", "Peter Pan", "J. M. Barrie", 2.34)
@@ -96,4 +96,63 @@ SQL;
 $result = $db->exec($query);
 var_dump($result);
 $error = $db->errorInfo()[2];
-var_dump($error); // Duplicate entry '9788187981954' for key 'isbn'
+var_dump($error); // Duplicate entry '9788187981954' for key 'isbn'*/
+
+/*
+$query = 'SELECT * FROM book WHERE author = :author';
+$statement = $db->prepare($query);
+$statement->bindValue('author', 'George Orwell');
+$statement->execute();
+$rows = $statement->fetchAll();
+var_dump($rows);*/
+
+/*$query = <<<SQL
+INSERT INTO book (isbn, title, author, price)
+VALUES (:isbn, :title, :author, :price)
+SQL;
+$statement = $db->prepare($query);
+$params = [
+    'isbn' => '9781412108614',
+    'title' => 'Iliad',
+    'author' => 'Homer',
+    'price' => 9.25
+];
+$statement->execute($params);
+echo $db->lastInsertId(); // 8*/
+
+function addSale(int $userId, array $bookIds) {
+    $db = new PDO(
+        'mysql:host=127.0.0.1;dbname=bookstore',
+        'root',
+        'root'
+    );
+    $db->beginTransaction();
+    try {
+        $query = 'INSERT INTO sale (customer_id, date) '. 'VALUES(:id, NOW())';
+        $statement = $db->prepare($query);
+        if (!$statement->execute(['id' => $userId])) {
+            throw new Exception($statement->errorInfo()[2]);
+        }
+        $saleId = $db->lastInsertId();
+        $query = 'INSERT INTO sale_book (book_id, sale_id) '
+            . 'VALUES(:book, :sale)';
+        $statement = $db->prepare($query);
+        $statement->bindValue('sale', $saleId);
+        foreach ($bookIds as $bookId) {
+            $statement->bindValue('book', $bookId);
+            if (!$statement->execute()) {
+                throw new Exception($statement->errorInfo()[2]);
+            }
+        }
+        $db->commit();
+    } catch (Exception $e) {
+        $db->rollBack();
+        throw $e;
+    }
+}
+
+try {
+    addSale(1, [1, 2, 3]);
+} catch (Exception $e) {
+    echo 'Error adding sale: ' . $e->getMessage();
+}
