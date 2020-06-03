@@ -62,10 +62,6 @@ $premium = CustomerFactory::factory('premium', null, 'james', 'bond', 'james@bon
 var_dump($basic);
 var_dump($premium);
 
-$config = Config::getInstance();
-$dbConfig = $config->get('db');
-var_dump($dbConfig);
-
 $addTaxes = function (array &$book, $index, $percentage) {
     $book['price'] += round($percentage * $book['price'], 2);
 };
@@ -79,3 +75,25 @@ $books = [
 array_walk($books, $addTaxes, 0.16);
 
 var_dump($books);
+
+$dbConfig = Config::getInstance()->get('db');
+$db = new PDO(
+    'mysql:host=127.0.0.1;dbname=bookstore',
+    $dbConfig['user'],
+    $dbConfig['password']
+);
+$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+$rows = $db->query('SELECT * FROM book ORDER BY title');
+foreach ($rows as $row) {
+    var_dump($row);
+}
+
+$query = <<<SQL
+INSERT INTO book (isbn, title, author, price)
+VALUES ("9788187981954", "Peter Pan", "J. M. Barrie", 2.34)
+SQL;
+$result = $db->exec($query);
+var_dump($result);
+$error = $db->errorInfo()[2];
+var_dump($error); // Duplicate entry '9788187981954' for key 'isbn'
