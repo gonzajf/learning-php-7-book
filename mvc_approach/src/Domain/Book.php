@@ -11,13 +11,6 @@ class Book {
     private $stock;
     private $price;
 
-    public function __construct(int $isbn, string $title, string $author, int $available = 0) {
-        $this->isbn = $isbn;
-        $this->title = $title;
-        $this->author = $author;
-        $this->available = $available;
-    }
-
     public function getId(){
         return $this->id;
     }

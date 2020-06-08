@@ -11,7 +11,7 @@ use PDO;
 
 class BookModel extends AbstractModel {
 
-    const CLASS_NAME = '\Bookstore\Domain\Book';
+    const CLASSNAME = '\Bookstore\Domain\Book';
 
     public function get(int $bookId): Book {
 
