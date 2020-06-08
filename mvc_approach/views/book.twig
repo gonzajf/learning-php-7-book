@@ -1,3 +1,9 @@
+{% extends 'layout.twig' %}
+
+{% block title %}
+    {{ book.title }}
+{% endblock %}
+{% block content %}
 <h2>{{ book.title }}</h2>
 <h3>{{ book.author }}</h3>
 <hr>
@@ -18,3 +24,4 @@
 <form method="post" action="/book/{{book.id}}/buy">
     <input type="submit" value="Buy">
 </form>
+{% endblock %}
