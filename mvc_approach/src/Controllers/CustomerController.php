@@ -32,7 +32,7 @@ class CustomerController extends  AbstractController {
             return $this->render('login.twig', $params);
         }
         setcookie('user', $customer->getId());
-        $newController = new BookController($this->request);
+        $newController = new BookController($this->di, $this->request);
         return $newController->getAll();
     }
 }

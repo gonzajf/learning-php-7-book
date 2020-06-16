@@ -14,14 +14,6 @@ class Config {
         $this->data = json_decode($json, true);
     }
 
-    public static function getInstance() {
-
-        if(self::$instance == null) {
-            self::$instance = new Config();
-        }
-        return self::$instance;
-    }
-
     public function get($key) {
         if (!isset($this->data[$key])) {
             throw new NotFoundException("Key $key not in config.");
