@@ -8,7 +8,7 @@ class Sale {
 
     private $id;
     private $customer_id;
-    private $book;
+    private $books = [];
     private $date;
 
     public function setCustomerId(int $customerId) {
