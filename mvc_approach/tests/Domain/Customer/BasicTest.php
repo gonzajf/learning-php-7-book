@@ -23,4 +23,11 @@ class BasicTest extends PHPUnit_Framework_TestCase {
             'Basic customer should borrow up to 3 books.'
         );
     }
+
+    public function testIsExemptOfTaxes() {
+        $this->assertFalse(
+            $this->customer->isExtentOfTaxes(),
+            'Basic customer should be exempt of taxes.'
+        );
+    }
 }
