@@ -30,4 +30,12 @@ class BasicTest extends PHPUnit_Framework_TestCase {
             'Basic customer should be exempt of taxes.'
         );
     }
+
+    public function testGetMonthlyFee() {
+        $this->assertEquals(
+            5,
+            $this->customer->getMonthlyFee(),
+            'Basic customer should pay 5 a month.'
+        );
+    }
 }
