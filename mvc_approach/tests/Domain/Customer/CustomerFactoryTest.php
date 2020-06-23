@@ -24,4 +24,14 @@ class CustomerFactoryTest extends PHPUnit_Framework_TestCase {
         );
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Wrong type.
+     */
+    public function testCreatingWrongTypeOfCustomer() {
+        $customer = CustomerFactory::factory(
+            'deluxe', 1, 'han', 'solo', 'han@solo.com'
+        );
+    }
+
 }
