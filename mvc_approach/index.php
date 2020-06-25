@@ -30,3 +30,5 @@ $di->set('Logger', $log);
 $router = new Router($di);
 $response = $router->route(new Request());
 echo $response;
+
+$di->set('BookModel', new BookModel($di->get('PDO')));
